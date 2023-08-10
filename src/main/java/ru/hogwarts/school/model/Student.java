@@ -12,6 +12,9 @@ public class Student {
     private int age;
     private String name;
 
+    public Student() {
+    }
+
     @Override
     public String toString() {
         return "Student{" +

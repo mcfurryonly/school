@@ -6,6 +6,9 @@ import javax.persistence.Id;
 import java.util.Objects;
 @Entity
 public class Faculty {
+    public Faculty() {
+    }
+
     @Id
     @GeneratedValue
     private long id;
