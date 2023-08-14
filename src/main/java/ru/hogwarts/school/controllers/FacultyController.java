@@ -15,6 +15,7 @@ public class FacultyController {
     private final FacultyService facultyService;
 
     public FacultyController(FacultyService facultyService) {
+
         this.facultyService = facultyService;
     }
 
@@ -53,7 +54,12 @@ public class FacultyController {
         return ResponseEntity.ok().build();
     }
     @GetMapping("/color")
-    public Collection<Faculty> byColor(@RequestParam String color) {
-        return facultyService.findByColor(color);
+    public Collection<Faculty> byColor(@RequestParam String name, @RequestParam String color) {
+        return facultyService.findByColor(name, color);
+    }
+@GetMapping("/{facultyId}/students")
+    public Collection<Student> getStudentsByFaculty(@PathVariable long facultyId){
+    return facultyService.findFaculty(facultyId).getStudents();
+
     }
 }

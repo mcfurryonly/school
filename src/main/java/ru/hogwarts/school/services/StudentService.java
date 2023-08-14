@@ -42,7 +42,14 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
-    public Collection<Student> findByAgeStudent(int age) {
-        return Collections.emptyList();
+    public Collection<Student> findByAgeStudent(int minAge, int maxAge) {
+
+        return studentRepository.findAllByAgeBetween(minAge, maxAge);
     }
+
+    public Collection<Student> fidStudentsByFaculty(long facultyId) {
+        return studentRepository.findAllByFaculty_Id(facultyId);
+    }
+
+
 }
