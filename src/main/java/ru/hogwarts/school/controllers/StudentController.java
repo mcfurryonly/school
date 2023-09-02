@@ -61,5 +61,18 @@ public class StudentController {
         return studentService.fidStudentsByFaculty(facId);
     }
 
+    @GetMapping("/avg-age")
+    public int averageAge() {
+        return studentService.getAverageAge();
+    }
+    @GetMapping("/count")
+    public int getStudentCount() {
+        return studentService.getStudentCount();
+    }
+    @GetMapping("/last")
+    public Collection<Student> getLastStudent() {
+        return studentService.getLastStudent();
+    }
+
 
 }
