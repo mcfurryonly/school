@@ -7,7 +7,7 @@ select name, age from student where age > 30 and age < 40
 select name from student;
 
 select * from student
-where name ilike '%a%';
+where name like '%a%';
 
 select * from student
 where age < 37;
