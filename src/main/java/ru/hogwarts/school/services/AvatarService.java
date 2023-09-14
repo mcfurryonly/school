@@ -1,5 +1,7 @@
 package ru.hogwarts.school.services;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -29,12 +31,16 @@ public class AvatarService {
     private final StudentRepository studentRepository;
     private final AvatarRepository avatarRepository;
 
+    Logger logger = LoggerFactory.getLogger(AvatarService.class);
+
     public AvatarService(StudentRepository studentRepository, AvatarRepository avatarRepository) {
+        logger.debug("Вызов конструктора AvatarService");
         this.studentRepository = studentRepository;
         this.avatarRepository = avatarRepository;
     }
 
     public void uploadAvatar(Long studentId, MultipartFile avatarFile)throws IOException {
+        logger.debug("Вызов метода uploadAvatar");
         Student student = studentRepository.getById(studentId);
 
         Path filePath = Path.of(avatarsDir, student + "." + getExtensions(avatarFile.getOriginalFilename()));
@@ -61,6 +67,7 @@ public class AvatarService {
     }
 
     private byte[] generateDataForDB(Path filePath) throws IOException{
+        logger.debug("Вызов метода generateDataForDB");
         try (InputStream is = Files.newInputStream(filePath);
              BufferedInputStream bis = new BufferedInputStream(is, 1024);
              ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
@@ -80,14 +87,17 @@ public class AvatarService {
     }
 
     public Avatar findAvatar(Long studentId) {
+        logger.debug("Вызов метода findAvatar");
         return avatarRepository.findByStudentId(studentId).orElse(new Avatar());
     }
 
     private String getExtensions(String filename) {
+        logger.debug("Вызов метода getExtensions");
         return filename.substring(filename.lastIndexOf(".") + 1);
     }
 
     public List<Avatar> getAvatarPage(int pageNumber, int pageSize) {
+        logger.debug("Вызов метода getAvatarPage");
         var request = PageRequest.of(pageNumber, pageSize);
         return avatarRepository.findAll(request).getContent();
     }
