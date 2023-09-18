@@ -12,12 +12,14 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class StudentService {
     private final StudentRepository studentRepository;
 
     Logger logger = LoggerFactory.getLogger(StudentService.class);
+
     @Autowired
     public StudentService(StudentRepository studentRepository) {
         logger.debug("Вызов конструктора StudentService");
@@ -47,6 +49,7 @@ public class StudentService {
         studentRepository.deleteById(id);
 
     }
+
     public Collection<Student> getAllStudents() {
         logger.debug("Вызов метода getAllStudents");
 
@@ -68,13 +71,79 @@ public class StudentService {
         logger.debug("Вызов метода getAverageAge");
         return studentRepository.getAverageAge();
     }
+
     public int getStudentCount() {
         logger.debug("Вызов метода getStudentCount");
         return studentRepository.getStudentCount();
     }
+
     public List<Student> getLastStudent() {
         logger.debug("Вызов метода getLastStudent");
         return studentRepository.getLastStudents();
+    }
+
+    public double getStudentAvgAge() {
+        return studentRepository.findAll()
+                .stream()
+                .mapToInt(Student::getAge)
+                .average()
+                .orElse(0);
+    }
+
+    public List<String> getNameStartA() {
+        return studentRepository.findAll()
+                .stream()
+                .map(Student::getName)
+                .map(String::toUpperCase)
+                .filter(name -> name.startsWith("A"))
+                .sorted()
+                .collect(Collectors.toList());
+    }
+
+    public void printUnsync() {
+        var students = studentRepository.findAll();
+
+
+        System.out.println(students.get(0));
+        System.out.println(students.get(1));
+
+        new Thread(() -> {
+            System.out.println(students.get(2));
+            System.out.println(students.get(3));
+        }).start();
+
+        new Thread(() -> {
+            System.out.println(students.get(4));
+            System.out.println(students.get(5));
+        }).start();
+    }
+    public void printSync() {
+        var students = studentRepository.findAll();
+
+
+        System.out.println(students.get(0));
+        System.out.println(students.get(1));
+
+        new Thread(() -> {
+            print(students.get(2));
+            print(students.get(3));
+        }).start();
+
+        new Thread(() -> {
+            print(students.get(4));
+            print(students.get(5));
+        }).start();
+    }
+
+    public synchronized void print(Object o) {
+        System.out.println(o.toString());
+    }
+
+    public int getIntegerNumber() {
+        return Stream
+                .iterate(1, a -> a + 1)
+                .limit(1_000_000)
+                .reduce(0, (a, b) -> a + b);
     }
 
 

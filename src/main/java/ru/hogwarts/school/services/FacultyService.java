@@ -9,10 +9,7 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.FacultyRepository;
 
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -51,7 +48,6 @@ public class FacultyService {
     }
     public Collection<Faculty> getAllFacults() {
         logger.debug("Вызов метода getAllFacults");
-
         return facultyRepository.findAll();
     }
 
@@ -59,5 +55,13 @@ public class FacultyService {
         logger.debug("Вызов метода findByColor");
         return facultyRepository.findAllByColorOrNameIgnoreCase(name, color);
 
+    }
+
+    public String longestName() {
+       return facultyRepository.findAll()
+                .stream()
+                .map(Faculty::getName)
+                .max(Comparator.naturalOrder())
+                .orElse(null);
     }
 }

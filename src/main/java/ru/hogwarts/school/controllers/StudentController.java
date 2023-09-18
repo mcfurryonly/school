@@ -7,6 +7,7 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.services.StudentService;
 
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping("student")
@@ -56,6 +57,7 @@ public class StudentController {
     public Collection<Student> findByAgeStudent(@RequestParam int minAge, @RequestParam int maxAge) {
         return studentService.findByAgeStudent(minAge, maxAge);
     }
+
     @GetMapping("/byFaculty")
     public Collection<Student> findStudentByFaculty(@RequestParam long facId) {
         return studentService.fidStudentsByFaculty(facId);
@@ -65,14 +67,42 @@ public class StudentController {
     public int averageAge() {
         return studentService.getAverageAge();
     }
+
     @GetMapping("/count")
     public int getStudentCount() {
         return studentService.getStudentCount();
     }
+
     @GetMapping("/last")
     public Collection<Student> getLastStudent() {
         return studentService.getLastStudent();
     }
+
+    @GetMapping("/name-A")
+    public List<String> getNameStartA() {
+        return studentService.getNameStartA();
+    }
+
+    @GetMapping("/avg-ageAll")
+    public double getStudentAvgAge() {
+        return studentService.getStudentAvgAge();
+    }
+
+    @GetMapping("print-thread")
+    public void printUnsync() {
+        studentService.printUnsync();
+    }
+    @GetMapping("print-synchronized-thread")
+    public void printSync() {
+        studentService.printSync();
+    }
+    @GetMapping("/get_integer_number")
+    public int getIntegerNumber() {
+        return studentService.getIntegerNumber();
+    }
+
+
+
 
 
 }
