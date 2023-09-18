@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class FacultyService {
     private final FacultyRepository facultyRepository;
 
-    Logger logger = LoggerFactory.getLogger(FacultyService.class);
+    private final Logger logger = LoggerFactory.getLogger(FacultyService.class);
     @Autowired
     public FacultyService(FacultyRepository facultyRepository) {
         logger.debug("Вызов конструктора FacultyService");

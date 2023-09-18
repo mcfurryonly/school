@@ -18,7 +18,7 @@ import java.util.stream.Stream;
 public class StudentService {
     private final StudentRepository studentRepository;
 
-    Logger logger = LoggerFactory.getLogger(StudentService.class);
+   private final Logger logger = LoggerFactory.getLogger(StudentService.class);
 
     @Autowired
     public StudentService(StudentRepository studentRepository) {
