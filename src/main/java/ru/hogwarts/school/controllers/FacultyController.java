@@ -15,6 +15,7 @@ public class FacultyController {
     private final FacultyService facultyService;
 
     public FacultyController(FacultyService facultyService) {
+
         this.facultyService = facultyService;
     }
 
@@ -49,11 +50,23 @@ public class FacultyController {
 
     @DeleteMapping("{id}")
     public ResponseEntity deleteFaculty(@PathVariable long id) {
-         facultyService.deleteFaculty(id);
+        facultyService.deleteFaculty(id);
         return ResponseEntity.ok().build();
     }
+
     @GetMapping("/color")
-    public Collection<Faculty> byColor(@RequestParam String color) {
-        return facultyService.findByColor(color);
+    public Collection<Faculty> byColor(@RequestParam String name, @RequestParam String color) {
+        return facultyService.findByColor(name, color);
+    }
+
+    @GetMapping("/{facultyId}/students")
+    public Collection<Student> getStudentsByFaculty(@PathVariable long facultyId) {
+        return facultyService.findFaculty(facultyId).getStudents();
+
+    }
+
+    @GetMapping("/longest-name")
+    public String longestName() {
+        return facultyService.longestName();
     }
 }

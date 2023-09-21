@@ -1,16 +1,21 @@
 package ru.hogwarts.school.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
+
 @Entity
 public class Faculty {
+    public Faculty() {
+    }
+
     @Id
     @GeneratedValue
     private long id;
     private String color;
     private String name;
+    @OneToMany(mappedBy = "faculty")
+    private Set<Student> students;
 
     @Override
     public String toString() {
@@ -26,12 +31,12 @@ public class Faculty {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Faculty faculty = (Faculty) o;
-        return Objects.equals(id, faculty.id) && Objects.equals(color, faculty.color) && Objects.equals(name, faculty.name);
+        return id == faculty.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, color, name);
+        return Objects.hash(id);
     }
 
     public Long getId() {
@@ -56,6 +61,14 @@ public class Faculty {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(Set<Student> students) {
+        this.students = students;
     }
 
     public Faculty(Long id, String color, String name) {
