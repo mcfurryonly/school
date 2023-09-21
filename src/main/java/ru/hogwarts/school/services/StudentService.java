@@ -20,6 +20,10 @@ public class StudentService {
 
    private final Logger logger = LoggerFactory.getLogger(StudentService.class);
 
+    public Integer count = 0;
+
+
+
     @Autowired
     public StudentService(StudentRepository studentRepository) {
         logger.debug("Вызов конструктора StudentService");
@@ -118,25 +122,28 @@ public class StudentService {
         }).start();
     }
     public void printSync() {
-        var students = studentRepository.findAll();
+
+            var students = studentRepository.findAll();
 
 
-        System.out.println(students.get(0));
-        System.out.println(students.get(1));
+            System.out.println(students.get(0));
+            System.out.println(students.get(1));
 
-        new Thread(() -> {
-            print(students.get(2));
-            print(students.get(3));
-        }).start();
+            new Thread(() -> {
+                print(students);
+                print(students);
+            }).start();
 
-        new Thread(() -> {
-            print(students.get(4));
-            print(students.get(5));
-        }).start();
+            new Thread(() -> {
+                print(students);
+                print(students);
+            }).start();
+
     }
 
-    public synchronized void print(Object o) {
-        System.out.println(o.toString());
+    public synchronized void print(List<Student> students) {
+        System.out.println(students.get(count++ % students.size()));
+
     }
 
     public int getIntegerNumber() {

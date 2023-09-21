@@ -16,10 +16,4 @@ public class InfoController {
         return "Используемый порт" + port;
     }
 
-
-    @GetMapping
-    public void startT1() {
-
-    }
-
 }
