@@ -23,8 +23,6 @@ public class StudentService {
     public Integer count = 0;
 
 
-
-    @Autowired
     public StudentService(StudentRepository studentRepository) {
         logger.debug("Вызов конструктора StudentService");
         this.studentRepository = studentRepository;
